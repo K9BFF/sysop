@@ -2,7 +2,7 @@
 a nixos operations frontent for lazy people
 
 ### installation:
-1. prerequesites
+1. prerequesites\n
 the only prerequesite is `nom`. please ensure you have it installed before using `sysop`!
 
 2. initial setup
