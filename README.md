@@ -4,7 +4,7 @@ a nixos operations frontent for lazy people
 ### installation:
 1. prerequesites
 
-the only prerequesite is `nom`. please ensure you have it installed before using `sysop`!
+the only prerequesites are `nom` and `nix-search-cli`. please ensure you have them installed before using `sysop`!
 
 2. initial setup
 
@@ -28,3 +28,4 @@ now you can give it a shot by running `sysop -h`
 |-d    | garbage collection     |
 |-p    | nix-shell installation |
 |-h    | help                   |
+|-s    | search                 |

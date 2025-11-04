@@ -41,6 +41,11 @@ if [[ $1 == "-p" ]]; then
 	nix-shell -p $1 |& nom
 fi
 
+# search
+if [[ $1 == "-s" ]]; then
+	nix-search $1
+fi
+
 # help
 if [[ $1 == "-h" ]]; then
 	echo "sysop: system operations"
@@ -50,6 +55,7 @@ if [[ $1 == "-h" ]]; then
 	echo "-d     Garbage Collection"
 	echo "-h     Display this help"
 	echo "-p     nix-shell install (temporary)"
+	echo "-s     Search"
 fi
 
 
