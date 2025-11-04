@@ -10,7 +10,7 @@ if [[ $1 == "-r" ]]; then
 	fi
 fi
 
-# updater
+# upgrade
 if [[ $1 == "-u" ]]; then
 	if [[ $EUID -ne 0 ]]; then
 		echo "Needs to be run as sudo..."
