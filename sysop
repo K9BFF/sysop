@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# rebuild
+if [[ $1 == "-r" ]]; then
+	if [[ $EUID -ne 0 ]]; then
+		echo "Needs to be run as sudo..." 
+		exit 1
+	else
+		nixos-rebuild switch |& nom
+	fi
+fi
+
+# updater
+if [[ $1 == "-u" ]]; then
+	if [[ $EUID -ne 0 ]]; then
+		echo "Needs to be run as sudo..."
+		exit 1
+	else
+		nixos-rebuild switch --upgrade |& nom
+	fi
+fi
+
+# garbage collection
+if [[ $1 == "-d" ]]; then
+	if [[ $EUID -ne 0 ]]; then
+		echo "Needs to be run as sudo..."
+		exit 1
+	else
+		read -p "Are you sure? (y/N): " yesno
+		if [[ $yesno == "y" ]]; then
+			nix-collect-garbage -d |& nom
+		else
+			echo "Couldn't confirm..."
+			exit 1
+		fi
+	fi
+fi
+
+# nix-shell
+if [[ $1 == "-p" ]]; then
+	nix-shell -p $1 |& nom
+fi
+
+# help
+if [[ $1 == "-h" ]]; then
+	echo "Sysop: System Operations"
+	echo " "
+	echo "Sudo Required Options"
+	echo "-r     Rebuild"
+	echo "-u     Upgrade"
+	echo "-d     Garbage Collection"
+	echo " "
+	echo "User Options"
+	echo "-h     Display this help"
+	echo "-p     nix-shell install (temporary)"
+fi
+
+
