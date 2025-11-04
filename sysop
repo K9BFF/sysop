@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# CC-BY-NC-SA 2025 K9BFF
+
 # rebuild
 if [[ $1 == "-r" ]]; then
 	if [[ $EUID -ne 0 ]]; then
