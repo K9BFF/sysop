@@ -1,5 +1,5 @@
 # sysop: system operations
-a nixos operations frontent for lazy people
+a NixOS operations frontent for lazy people
 
 ### installation:
 1. prerequesites
