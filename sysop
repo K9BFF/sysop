@@ -38,7 +38,7 @@ fi
 
 # nix-shell
 if [[ $1 == "-p" ]]; then
-	nix-shell -p $1 |& nom
+	nix-shell -p $2 |& nom
 fi
 
 # search
