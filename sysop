@@ -43,7 +43,7 @@ fi
 
 # search
 if [[ $1 == "-s" ]]; then
-	nix-search $1
+	nix-search $2
 fi
 
 # help
