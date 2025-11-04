@@ -14,7 +14,7 @@ create `~/.local/bin`
 
 and allow NixOS to see it by adding `environment.localBinInPath = true;` to your `/etc/nixos/configuration.nix` file.
 
-3. reboot!
+3. rebuild and reboot!
 
 now you can give it a shot by running `sysop -h`
 
