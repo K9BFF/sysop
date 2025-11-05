@@ -2,62 +2,72 @@
 
 # CC-BY-NC-SA 2025 K9BFF
 
+
+# gots 2 make sure
+su_check() {
+	if [[ $EUID -ne 0 ]]; then
+		echo "sysop: needs to be run as sudo..."
+		exit 1
+	fi
+}
+
+
+
 # rebuild
 if [[ $1 == "-r" ]]; then
-	if [[ $EUID -ne 0 ]]; then
-		echo "Needs to be run as sudo..." 
-		exit 1
-	else
-		nixos-rebuild switch |& nom
-	fi
-fi
+	su_check
+	nixos-rebuild switch |& nom
+
+
 
 # upgrade
-if [[ $1 == "-u" ]]; then
-	if [[ $EUID -ne 0 ]]; then
-		echo "Needs to be run as sudo..."
-		exit 1
-	else
-		nixos-rebuild switch --upgrade |& nom
-	fi
-fi
+elif [[ $1 == "-u" ]]; then
+	su_check
+	nixos-rebuild switch --upgrade |& nom
+
+
 
 # garbage collection
-if [[ $1 == "-d" ]]; then
-	if [[ $EUID -ne 0 ]]; then
-		echo "Needs to be run as sudo..."
-		exit 1
+elif [[ $1 == "-d" ]]; then
+	su_check
+	read -p "sysop: garbage collection: are you sure? (y/N): " yesno
+	if [[ $yesno == "y" ]]; then
+		nix-collect-garbage -d |& nom
 	else
-		read -p "Are you sure? (y/N): " yesno
-		if [[ $yesno == "y" ]]; then
-			nix-collect-garbage -d |& nom
-		else
-			echo "Couldn't confirm..."
-			exit 1
-		fi
+		echo "sysop: couldn't confirm..."
+		exit 1
 	fi
-fi
+
+
 
 # nix-shell
-if [[ $1 == "-p" ]]; then
+elif [[ $1 == "-p" ]]; then
 	nix-shell -p $2 |& nom
-fi
+
+
 
 # search
-if [[ $1 == "-s" ]]; then
+elif [[ $1 == "-s" ]]; then
 	nix-search $2
-fi
+
+
 
 # help
-if [[ $1 == "-h" ]]; then
+elif [[ $1 == "-h" ]]; then
 	echo "sysop: system operations"
-	echo " "
+	echo
+	echo "flag   operation"
 	echo "-r     Rebuild"
 	echo "-u     Upgrade"
 	echo "-d     Garbage Collection"
 	echo "-p     nix-shell install (temporary)"
 	echo "-s     Search"
 	echo "-h     Display this help"
+
+
+
+# bad flag detector
+else
+	echo "sysop: $1: not a valid flag. Please see sysop -h for more information."
+	exit 1
 fi
-
-
