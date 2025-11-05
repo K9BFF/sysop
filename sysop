@@ -55,9 +55,9 @@ if [[ $1 == "-h" ]]; then
 	echo "-r     Rebuild"
 	echo "-u     Upgrade"
 	echo "-d     Garbage Collection"
-	echo "-h     Display this help"
 	echo "-p     nix-shell install (temporary)"
 	echo "-s     Search"
+	echo "-h     Display this help"
 fi
 
 
