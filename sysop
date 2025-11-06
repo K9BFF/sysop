@@ -31,7 +31,7 @@ elif [[ $1 == "-u" ]]; then
 elif [[ $1 == "-d" ]]; then
 	su_check
 	read -p "sysop: garbage collection: are you sure? (y/N): " yesno
-	if [[ $yesno == "y" ]]; then
+	if [[ ${yesno:0:1} == "y" ]]; then
 		nix-collect-garbage -d |& nom
 	else
 		echo "sysop: couldn't confirm..."
