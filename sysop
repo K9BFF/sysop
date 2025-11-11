@@ -11,6 +11,16 @@ su_check() {
 	fi
 }
 
+# inverse sudo check because i found a bug last night
+inv_su_check() {
+  if [[ $EUID -ne 0 ]]; then
+    echo
+  else
+    echo "sysop: don't run this flag as sudo!"
+    exit 1
+  fi
+}
+
 
 
 # rebuild
@@ -42,6 +52,7 @@ elif [[ $1 == "-d" ]]; then
 
 # nix-shell
 elif [[ $1 == "-p" ]]; then
+  inv_su_check
 	nix-shell -p "$2" |& nom
 
 
