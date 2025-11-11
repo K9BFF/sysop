@@ -21,11 +21,11 @@ now you can give it a shot by running `sysop -h`
 ### options:
 
 
-| flag |        function        |
-|------|------------------------|
-|-r    | rebuild                |
-|-u    | upgrade                |
-|-d    | garbage collection     |
-|-p    | nix-shell installation |
-|-h    | help                   |
-|-s    | search                 |
+| flag | function                         |
+|------|----------------------------------|
+|-r    | rebuild and push dotfiles to git |
+|-u    | upgrade                          |
+|-d    | garbage collection               |
+|-p    | nix-shell installation           |
+|-h    | help                             |
+|-s    | search                           |

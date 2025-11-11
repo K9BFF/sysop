@@ -11,6 +11,8 @@ su_check() {
 	fi
 }
 
+
+
 # inverse sudo check because i found a bug last night
 inv_su_check() {
   if [[ $EUID -ne 0 ]]; then
@@ -22,17 +24,12 @@ inv_su_check() {
 }
 
 
-git-push() {
-  update-dotfiles
-}
-
 
 # rebuild
 if [[ $1 == "-r" ]]; then
-  git-push
-	su_check
-	nixos-rebuild switch |& nom
-
+  inv_su_check
+  update-dotfiles
+	sudo nixos-rebuild switch |& nom
 
 
 # upgrade
@@ -45,7 +42,6 @@ elif [[ $1 == "-u" ]]; then
 # garbage collection
 elif [[ $1 == "-d" ]]; then
 	su_check
-	# shellcheck disable=SC2162
 	read -p "sysop: garbage collection: are you sure? (y/N): " yesno
 	if [[ ${yesno:0:1} == "y" ]]; then
 		nix-collect-garbage -d |& nom
