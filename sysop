@@ -14,7 +14,7 @@ su_check() {
 # inverse sudo check because i found a bug last night
 inv_su_check() {
   if [[ $EUID -ne 0 ]]; then
-    echo
+    :
   else
     echo "sysop: don't run this flag as sudo!"
     exit 1
@@ -22,9 +22,14 @@ inv_su_check() {
 }
 
 
+git-push() {
+  update-dotfiles
+}
+
 
 # rebuild
 if [[ $1 == "-r" ]]; then
+  git-push
 	su_check
 	nixos-rebuild switch |& nom
 
@@ -40,6 +45,7 @@ elif [[ $1 == "-u" ]]; then
 # garbage collection
 elif [[ $1 == "-d" ]]; then
 	su_check
+	# shellcheck disable=SC2162
 	read -p "sysop: garbage collection: are you sure? (y/N): " yesno
 	if [[ ${yesno:0:1} == "y" ]]; then
 		nix-collect-garbage -d |& nom
@@ -59,12 +65,14 @@ elif [[ $1 == "-p" ]]; then
 
 # search
 elif [[ $1 == "-s" ]]; then
+  inv_su_check
 	nix-search "$2"
 
 
 
 # help
 elif [[ $1 == "-h" ]]; then
+  inv_su_check
 	echo "sysop: system operations"
 	echo
 	echo "flag   operation"
